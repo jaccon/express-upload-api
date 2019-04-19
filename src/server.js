@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const app_port = 3333; // porta principal da aplicação
+const app_port = process.env.PORT || 3333; // porta principal da aplicação
 const app_db_url = 'mongodb+srv://oministack:oministack@cluster0-kmocs.mongodb.net/oministack?retryWrites=true';
 const app = express();
 const path = require('path');
