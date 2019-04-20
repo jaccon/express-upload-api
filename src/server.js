@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const app_port = process.env.PORT || 3333; // porta principal da aplicação
-const app_db_url = 'mongodb+srv://oministack:oministack@cluster0-kmocs.mongodb.net/oministack?retryWrites=true';
+const api_config = require('./config/api');
+
+const app_port = process.env.PORT || api_config.app_default_port; // porta principal da aplicação
+const app_db_url = api_config.app_db_uri;
 const app = express();
 const path = require('path');
 const cors = require('cors');
@@ -29,12 +31,10 @@ mongoose.connect(app_db_url, {
     useNewUrlParser: true
 }); 
 
-
-
 app.use(express.json())
 app.use(express.urlencoded( { extended: true } ))
-app.use('/files', express.static(path.resolve(__dirname, '..', 'tmp')))
+app.use('/files', express.static(path.resolve(__dirname, '..', api_config.app_upload_dir)))
 
 app.use(require('./routes'))
-
-server.listen(process.env.PORT || 3333)
+console.log(`Load [ ${api_config.app_name} bundle ${api_config.app_bundle} ] `);
+server.listen(app_port);

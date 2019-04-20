@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const api_config = require('../config/api');
 
 const File = mongoose.Schema({
     title: {
@@ -18,7 +19,7 @@ const File = mongoose.Schema({
 })
 
 File.virtual('url').get(function() {
-    const url = process.env.URL || 'http://localhost:3333'
+    const url = process.env.URL || api_config.app_dev_url;
 
     return `${url}/files/${encodeURIComponent(this.path)}`
 })
